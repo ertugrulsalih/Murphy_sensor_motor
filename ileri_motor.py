@@ -1,33 +1,29 @@
 import RPi.GPIO as GPIO
 import time
 
-# L298N motor sürücüsü için GPIO pinlerini tanımlayın
+# GPIO pin numaraları
 ENA = 17
 IN1 = 27
 IN2 = 22
 
-# GPIO pinlerini BCM modunda yapılandırın
-GPIO.setmode(GPIO.BCM)
+def motor_calistir():
+    # GPIO pinleri ayarla
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(ENA, GPIO.OUT)
+    GPIO.setup(IN1, GPIO.OUT)
+    GPIO.setup(IN2, GPIO.OUT)
 
-# GPIO pinlerini çıkış olarak ayarlayın
-GPIO.setup(ENA, GPIO.OUT)
-GPIO.setup(IN1, GPIO.OUT)
-GPIO.setup(IN2, GPIO.OUT)
-
-# Fonksiyon tanımlama
-def run_motor():
-    # Motoru 2 saniye boyunca çalıştırın
+    # Motoru çalıştır
     GPIO.output(IN1, GPIO.HIGH)
     GPIO.output(IN2, GPIO.LOW)
     GPIO.output(ENA, GPIO.HIGH)
+
+    # Zaman sayacı
     start_time = time.time()
     while (time.time() - start_time) < 2:
-        continue
+        pass
 
-    # Motoru durdurun
+    # Motoru durdur
     GPIO.output(ENA, GPIO.LOW)
-    GPIO.output(IN1, GPIO.LOW)
-    GPIO.output(IN2, GPIO.LOW)
 
-# GPIO pinlerini temizleme
-GPIO.cleanup()
+    # GPIO pinlerini temizle
