@@ -1,39 +1,33 @@
 import RPi.GPIO as GPIO
 import time
 
-# GPIO pin numaraları
-ENA = 17
-IN1 = 27
-IN2 = 22
+# GPIO pin numaralarını ayarlama
+IN1_PIN = 15
+IN2_PIN = 13
+ENA_PIN = 11
 
-def motor_calistir():
-    # GPIO pinlerini ayarla
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(ENA, GPIO.OUT)
-    GPIO.setup(IN1, GPIO.OUT)
-    GPIO.setup(IN2, GPIO.OUT)
+# GPIO pinlerini kullanılabilir hale getirme
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(IN1_PIN, GPIO.OUT)
+GPIO.setup(IN2_PIN, GPIO.OUT)
+GPIO.setup(ENA_PIN, GPIO.OUT)
 
-    # Motoru çalıştır
-    GPIO.output(IN1, GPIO.HIGH)
-    GPIO.output(IN2, GPIO.LOW)
-    GPIO.output(ENA, GPIO.HIGH)
+# Motorun ileriye dönmesini sağlama
+GPIO.output(IN1_PIN, GPIO.HIGH)
+GPIO.output(IN2_PIN, GPIO.LOW)
 
-    # Zamanlayıcı başlat
-    t0 = time.time()
+# Motoru çalıştırma
+GPIO.output(ENA_PIN, GPIO.HIGH)
 
-    # 2 saniye boyunca motoru çalıştır
-    while time.time() - t0 < 2:
-        pass
+# Başlangıç zamanını kaydetme
+start_time = time.time()
 
-    # Motoru durdur
-    GPIO.output(ENA, GPIO.LOW)
+# 2 saniye boyunca motorun çalışmasını sağlama
+while time.time() - start_time < 2:
+    pass
 
-    # Zaman sayacını durdur ve ekrana yazdır
-    elapsed_time = time.time() - t0
-    print("Motor çalışma süresi: {:.2f} saniye".format(elapsed_time))
+# Motoru durdurma
+GPIO.output(ENA_PIN, GPIO.LOW)
 
-    # GPIO pinlerini temizle
-    GPIO.cleanup()
-
-# Fonksiyonu çağır
-motor_calistir()
+# GPIO pinlerini temizleme
+GPIO.cleanup()
