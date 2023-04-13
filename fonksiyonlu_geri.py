@@ -14,7 +14,7 @@ def geri():
     GPIO.setup(IN2_PIN, GPIO.OUT)
     GPIO.setup(ENA_PIN, GPIO.OUT)
 
-# Motorun ileriye dönmesini sağlama
+# Motorun geriye dönmesini sağlama
     GPIO.output(IN1_PIN, GPIO.LOW)
     GPIO.output(IN2_PIN, GPIO.HIGH)
 
