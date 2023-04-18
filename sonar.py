@@ -2,9 +2,9 @@ import RPi.GPIO as GPIO
 import time
 
 # GPIO pin numaralarını tanımlayın
-TRIG_PIN = 5
-ECHO_PIN = 6
-BUZZER_PIN = 25
+TRIG_PIN = 29
+ECHO_PIN = 31
+BUZZER_PIN = 33
 
 # BCM modunu kullanarak GPIO'yu yapılandırın
 GPIO.setmode(GPIO.BCM)
