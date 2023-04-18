@@ -1,5 +1,4 @@
 import RPi.GPIO as GPIO
-import time
 
 # GPIO pin numaralarını tanımlayın
 TRIG_PIN = 29
@@ -17,20 +16,18 @@ GPIO.setup(BUZZER_PIN, GPIO.OUT)
 
 # TRIG_PIN'i düşük seviyeye ayarlayarak sensörü başlatın
 GPIO.output(TRIG_PIN, False)
-time.sleep(0.5)
 
 # Fonksiyonu tanımlayın
 def measure_distance_and_trigger_buzzer():
     # TRIG_PIN'i yüksek seviyeye ayarlayarak bir ping gönderin
     GPIO.output(TRIG_PIN, True)
-    time.sleep(0.00001)
     GPIO.output(TRIG_PIN, False)
 
     # ECHO_PIN'deki yüksek seviye süresini ölçün
-    while GPIO.input(ECHO_PIN) == 0:
-        pulse_start = time.time()
-    while GPIO.input(ECHO_PIN) == 1:
-        pulse_end = time.time()
+    GPIO.wait_for_edge(ECHO_PIN, GPIO.RISING)
+    pulse_start = time.time()
+    GPIO.wait_for_edge(ECHO_PIN, GPIO.FALLING)
+    pulse_end = time.time()
 
     # Mesafeyi hesaplayın
     pulse_duration = pulse_end - pulse_start
@@ -50,7 +47,6 @@ def measure_distance_and_trigger_buzzer():
 while True:
     try:
         measure_distance_and_trigger_buzzer()
-        time.sleep(1)
     except KeyboardInterrupt:
         # Ctrl+C ile kesildiğinde GPIO pinlerini temizle ve çık
         GPIO.cleanup()
