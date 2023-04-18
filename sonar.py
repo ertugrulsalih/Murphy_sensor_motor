@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO
+import time
 
 # GPIO pin numaralarını tanımlayın
 TRIG_PIN = 29
